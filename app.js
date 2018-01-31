@@ -4,6 +4,8 @@ function onReady() {
   const addToDoForm = document.getElementById('addToDoForm');
   const newToDoText = document.getElementById('newToDoText');
   const toDoList = document.getElementById('toDoList');
+
+
   addToDoForm.addEventListener('submit', () => {
     event.preventDefault();
 
@@ -14,10 +16,27 @@ function onReady() {
     let newLi = document.createElement('li');
 
     //create a new input
-    let checkbox = document.createElement('input')
+    let checkbox = document.createElement('input');
+
+    //create a new deleteButton
+
+    let btn = document.createElement('button');
+
+    // create a text node
+
+    let text = document.createTextNode("Delete");
+
+
+  btn.addEventListener('click', () =>{
+
+      toDoList.removeChild(newLi);
+
+
+    });
 
     // set the input's type to checkbox
     checkbox.type = "checkbox";
+    checkbox.className = "checkbox";
 
     // set the title
     newLi.textContent = title;
@@ -25,14 +44,20 @@ function onReady() {
     // attach the checkbox to the li
     newLi.appendChild(checkbox);
 
+    //attach the deleteButton to the li
+    newLi.appendChild(btn);
+
+    //attach text to button
+    btn.appendChild(text);
+
     // attach the li to the ul
     toDoList.appendChild(newLi);
 
     //empty the input
     newToDoText.value = '';
+
   });
 }
-
 
 window.onload = function() {
   alert("The window had loaded");
