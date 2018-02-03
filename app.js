@@ -1,66 +1,51 @@
 
 
 function onReady() {
+let toDos = [];
   const addToDoForm = document.getElementById('addToDoForm');
   const newToDoText = document.getElementById('newToDoText');
   const toDoList = document.getElementById('toDoList');
 
-
-  addToDoForm.addEventListener('submit', () => {
-    event.preventDefault();
-
-    //get the text
-    let title = newToDoText.value;
-
-    // create a new li
-    let newLi = document.createElement('li');
-
-    //create a new input
-    let checkbox = document.createElement('input');
-
-    //create a new deleteButton
-
-    let btn = document.createElement('button');
-
-    // create a text node
-
-    let text = document.createTextNode("Delete");
-
-
-  btn.addEventListener('click', () =>{
-
-      toDoList.removeChild(newLi);
-
-
+  function createNewToDo() {
+  if (!newToDoText.value) { return; }
+      toDos.push({
+      title: newToDoText.value,
+      complete: false
     });
 
-    // set the input's type to checkbox
-    checkbox.type = "checkbox";
-    checkbox.className = "checkbox";
+      newToDoText.value = '';
 
-    // set the title
-    newLi.textContent = title;
+      renderTheUI();
+   }
+  function renderTheUI() {
+    const toDoList = document.getElementById('toDoList');
 
-    // attach the checkbox to the li
-    newLi.appendChild(checkbox);
+    toDoList.textContent = '';
 
-    //attach the deleteButton to the li
-    newLi.appendChild(btn);
+    toDos.forEach(function(toDo) {
+      const newLi = document.createElement('li');
+      const checkbox = document.createElement('input');
+      checkbox.type = "checkbox";
 
-    //attach text to button
-    btn.appendChild(text);
+      newLi.textContent = toDo.title;
 
-    // attach the li to the ul
-    toDoList.appendChild(newLi);
+      toDoList.appendChild(newLi);
+      newLi.appendChild(checkbox);
+     });
 
-    //empty the input
-    newToDoText.value = '';
+   }
+ addToDoForm.addEventListener('submit', event => {
+      event.preventDefault();
+      createNewToDo();
+       newToDoText.value = '';
+     });
+renderTheUI();
 
-  });
+
+
 }
 
 window.onload = function() {
-  alert("The window had loaded");
   onReady();
 
 
